@@ -1,0 +1,15 @@
+# log files
+*.log
+*.last
+*.pyc
+
+#
+*.egg-info
+__pycache__
+
+# PyCharm files
+.idea/
+*iml
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints
