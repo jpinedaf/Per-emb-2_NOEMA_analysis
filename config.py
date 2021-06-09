@@ -15,18 +15,25 @@ mpl.rcParams['ytick.direction'] = 'in'
 
 # file_HC3N_10_9_TdV_mJy
 # N2Hp_TdV = 'data/Per-emb-2-N2Hp-1-0_TdV.fits'
+HC3N_10_9_Vlsr = 'data/Per-emb-2-HC3N_10-9_fit_Vc.fits'
+HC3N_10_9_TdV = 'data/Per-emb-2-HC3N_10-9_TdV.fits'
 N2Dp_TdV = 'data/Per-emb-2-N2Dp-1-0_TdV.fits'
 N2Dp_Vlsr = 'data/Per-emb-2-N2Dp_1-0_fit_Vc.fits'
 N2Dp_eVlsr = 'data/Per-emb-2-N2Dp_1-0_fit_eVc.fits'
+N2Hp_TdV = 'data/Per-emb-2-N2Hp-1-0_TdV.fits'
 #
 ra_Per2 = 15 * (3 + (32 + 17.92/60.) / 60.) * u.deg
 dec_Per2 = (30 + (49 + 48.03 / 60.) / 60.) * u.deg
 distance = 300.
 N2Dp_TdV_levels = 19e-3 * np.arange(5, 20, 3)
+N2Hp_TdV_levels = 30e-3 * np.arange(5, 20, 3)
+HC3N_10_9_TdV_levels = 8e-3 * np.arange(5, 20, 3)
 
 Per2_inc = -43*u.deg
 Per2_pa = 130*u.deg
 Per2_v_lsr = 7.05*u.km/u.s
+
+region_file = 'Streamer_North_v2.reg'
 
 # CO contour levels to show outflow
 file_12CO_blue = 'data/Per-emb-2-CO_2-1-TdV-blue.fits'
@@ -105,6 +112,27 @@ def setup_plot_noema(fig_i, label_col='black', star_col='red'):
                        edgecolor=star_col, facecolor=label_col, zorder=31)
     fig_i.tick_labels.set_xformat('hh:mm:ss')
     fig_i.tick_labels.set_yformat('dd:mm:ss')
+    fig_i.ticks.set_length(7)
+    fig_i.axis_labels.set_xtext(r'Right Ascension (J2000)')
+    fig_i.axis_labels.set_ytext(r'Declination (J2000)')
+    return
+
+def setup_plot_30m(fig_i, label_col='black', star_col='red'):
+    """
+    Setup of IRAM 30m plots, since they will show all the same format.
+    """
+    fig_i.set_system_latex(True)
+    fig_i.ticks.set_color(label_col)
+    # fig_i.recenter(53.075, 30.8299, radius=45 * (u.arcsec).to(u.deg))
+    fig_i.set_nan_color('0.9')
+    fig_i.add_beam(color=label_col)
+    #
+    ang_size = (5e3 / distance) * u.arcsec
+    fig_i.add_scalebar(ang_size, label='5,000 au', color=label_col)
+    fig_i.show_markers(ra_Per2.value, dec_Per2.value, marker='*', s=60, layer='star',
+                       edgecolor=star_col, facecolor=label_col, zorder=31)
+    fig_i.tick_labels.set_xformat('hh:mm:ss')
+    fig_i.tick_labels.set_yformat('dd:mm')
     fig_i.ticks.set_length(7)
     fig_i.axis_labels.set_xtext(r'Right Ascension (J2000)')
     fig_i.axis_labels.set_ytext(r'Declination (J2000)')
